@@ -3,6 +3,7 @@
 # Xmake cache
 .xmake/
 build/
+compile_commands.json
 
 # MacOS Cache
 .DS_Store

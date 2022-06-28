@@ -1,0 +1,31 @@
+[
+{
+  "directory": "/home/xin/mymuduo",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-std=c++20", "-o", "build/.objs/test/linux/x86_64/release/test.cpp.o", "test.cpp"],
+  "file": "test.cpp"
+},
+{
+  "directory": "/home/xin/mymuduo",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-std=c++20", "-Imuduo", "-o", "build/.objs/muduo_net/linux/x86_64/release/muduo/net/EventLoop.cpp.o", "muduo/net/EventLoop.cpp"],
+  "file": "muduo/net/EventLoop.cpp"
+},
+{
+  "directory": "/home/xin/mymuduo",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-std=c++20", "-Imuduo", "-I", "/home/xin/.xmake/packages/f/fmt/8.1.1/212ea05ee1514fb8bc1d6d9f35de8988/include", "-o", "build/.objs/muduo_base/linux/x86_64/release/muduo/base/Condition.cpp.o", "muduo/base/Condition.cpp"],
+  "file": "muduo/base/Condition.cpp"
+},
+{
+  "directory": "/home/xin/mymuduo",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-std=c++20", "-Imuduo", "-I", "/home/xin/.xmake/packages/f/fmt/8.1.1/212ea05ee1514fb8bc1d6d9f35de8988/include", "-o", "build/.objs/muduo_base/linux/x86_64/release/muduo/base/TimeStamp.cpp.o", "muduo/base/TimeStamp.cpp"],
+  "file": "muduo/base/TimeStamp.cpp"
+},
+{
+  "directory": "/home/xin/mymuduo",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-std=c++20", "-Imuduo", "-I", "/home/xin/.xmake/packages/f/fmt/8.1.1/212ea05ee1514fb8bc1d6d9f35de8988/include", "-o", "build/.objs/muduo_base/linux/x86_64/release/muduo/base/CurrentThread.cpp.o", "muduo/base/CurrentThread.cpp"],
+  "file": "muduo/base/CurrentThread.cpp"
+},
+{
+  "directory": "/home/xin/mymuduo",
+  "arguments": ["/usr/bin/gcc", "-c", "-m64", "-std=c++20", "-Imuduo", "-I", "/home/xin/.xmake/packages/f/fmt/8.1.1/212ea05ee1514fb8bc1d6d9f35de8988/include", "-o", "build/.objs/muduo_base/linux/x86_64/release/muduo/base/CountDownLatch.cpp.o", "muduo/base/CountDownLatch.cpp"],
+  "file": "muduo/base/CountDownLatch.cpp"
+}]

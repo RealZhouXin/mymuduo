@@ -1,7 +1,9 @@
 #include <iostream>
 #include "muduo/base/Thread.h"
 #include "muduo/base/TimeStamp.h"
+#include "muduo/net/EventLoop.h"
 
 int main() {
-    std::cout << muduo::TimeStamp::now().toString();
+    muduo::net::EventLoop loop;
+    loop.loop();
 }

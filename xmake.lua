@@ -1,7 +1,7 @@
 add_rules("mode.debug", "mode.release")
 set_languages("c++20")
 
-add_requires("fmt")
+add_requires("fmt", "fmtlog")
 
 target("muduo_base")
     set_kind("static")
@@ -11,6 +11,7 @@ target("muduo_base")
 target("muduo_net")
     set_kind("static")
     add_files("muduo/net/*.cpp")
+    add_packages("fmt", "fmtlog")
     add_deps("muduo_base")
     add_includedirs("muduo")
     
@@ -18,6 +19,7 @@ target("test")
     set_kind("binary")
     add_files("test.cpp")
     add_deps("muduo_base", "muduo_net")
+    add_includedirs("muduo")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

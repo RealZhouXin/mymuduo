@@ -19,6 +19,9 @@ public:
     Poller(EventLoop* loop);
     ~Poller();
 
+    //为了eventloop 里的unique指针的构造
+    static Poller* newDefaultPoller(EventLoop* loop);
+
     TimeStamp poll(int timeoutMS, ChannelList* activeChannels);
 
     void updateChannel(Channel* channel);

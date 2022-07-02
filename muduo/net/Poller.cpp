@@ -12,6 +12,10 @@ Poller::Poller(EventLoop *loop) : ownerLoop_(loop) {}
 
 Poller::~Poller(){}
 
+Poller* Poller::newDefaultPoller(EventLoop *loop) {
+   return new Poller(loop); 
+}
+
 TimeStamp Poller::poll(int timeoutMs, ChannelList* activeChannel) {
     int numsEvents = ::poll(pollfds_.data(), pollfds_.size(), timeoutMs);
     TimeStamp now(TimeStamp::now());
@@ -21,6 +25,7 @@ TimeStamp Poller::poll(int timeoutMs, ChannelList* activeChannel) {
     } else {
         loge("Poller::poll");
     }
+    fmtlog::poll();
     return now;
 
 }
@@ -48,7 +53,7 @@ void Poller::updateChannel(Channel* channel) {
     logi("fd = {}, events = {}", channel->fd(), channel->events());
     if(channel->index() < 0) {
         //a new one, add to pollfds_
-        assert(channels_->find(channel->fd()) == channels.end());
+        assert(channels_.find(channel->fd()) == channels_.end());
         pollfd pfd;
         pfd.fd = channel->fd();
         pfd.events = static_cast<short>(channel->events());
@@ -64,13 +69,13 @@ void Poller::updateChannel(Channel* channel) {
         //updating existing one
         //确认channel map 上存在channel
         auto ch = channels_.find(channel->fd());
-        assert(ch != channels.end());
+        assert(ch != channels_.end());
         assert(ch->second == channel);
         //确认pollfds_数组上存在channel->fd()
         int idx = channel->index();
         assert(0 <= idx && idx < static_cast<int>(pollfds_.size()));
         pollfd &pfd = pollfds_[idx];
-        assert(pfd.fd == channel->fd() || pfd.fd = -1);
+        assert(pfd.fd == channel->fd() || pfd.fd == -1);
         //更新pollfd
         pfd.events = static_cast<short>(channel->events());
         pfd.revents = 0;

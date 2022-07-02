@@ -19,6 +19,7 @@ target("test")
     set_kind("binary")
     add_files("test.cpp")
     add_deps("muduo_base", "muduo_net")
+    add_packages("fmt", "fmtlog")
     add_includedirs("muduo")
 
 --

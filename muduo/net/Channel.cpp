@@ -18,6 +18,9 @@ Channel::Channel(EventLoop *loop, int fd) :
     revents_(0),
     index_(-1) {
 }
+Channel::~Channel() {
+    
+}
 
 void Channel::update() {
     loop_->updateChannel(this);

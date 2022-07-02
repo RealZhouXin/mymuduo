@@ -1,33 +1,37 @@
 #include "net/EventLoop.h"
-#include "net/Poller.h"
 #include "base/CurrentThread.h"
+#include "net/Poller.h"
+#include <base/Types.h>
 #include <cassert>
 #include <cstddef>
 #include <fmtlog/fmtlog.h>
-#include <base/Types.h>
 #include <poll.h>
 #include <thread>
 using namespace muduo;
 using namespace muduo::net;
 
-__thread EventLoop* t_loopInThisThread = 0;
+__thread EventLoop *t_loopInThisThread = 0;
 const int kPollTimeMs = 10000;
 
-EventLoop::EventLoop() : looping_(false), threadId_(CurrentThread::tid()) {
+EventLoop::EventLoop() :
+    looping_(false),
+    quit_(false), 
+    threadId_(CurrentThread::tid()), 
+    poller_(Poller::newDefaultPoller(this)) {
     //每个线程只能有一个EventLoop, 因此在构造的时候要检测当前线程是否有其他eventloop
     logi("EventLoop created");
-    if(t_loopInThisThread) {
+    if (t_loopInThisThread) {
         loge("Another eventLoop exit in this thread");
     } else {
         t_loopInThisThread = this;
-    }      
+    }
 }
 EventLoop::~EventLoop() {
     assert(!looping_);
     t_loopInThisThread = nullptr;
 }
 
-EventLoop* EventLoop::getEventLoopOfCurrentThread() {
+EventLoop *EventLoop::getEventLoopOfCurrentThread() {
     return t_loopInThisThread;
 }
 void EventLoop::abortNotInLoopThread() {
@@ -41,10 +45,10 @@ void EventLoop::loop() {
     looping_ = true;
     quit_ = false;
 
-    while(!quit_) {
+    while (!quit_) {
         activeChannels_.clear();
         poller_->poll(kPollTimeMs, &activeChannels_);
-        for(auto &it : activeChannels_) {
+        for (auto &it : activeChannels_) {
             it->handleEvent();
         }
     }
@@ -53,8 +57,8 @@ void EventLoop::loop() {
 }
 
 void EventLoop::quit() {
-    quit_ = false;
-    //wakeup();
+    quit_ = true;
+    // wakeup();
 }
 //由channel::update()调用
 void EventLoop::updateChannel(Channel *channel) {
@@ -62,4 +66,3 @@ void EventLoop::updateChannel(Channel *channel) {
     assertInLoopThread();
     poller_->updateChannel(channel);
 }
-
